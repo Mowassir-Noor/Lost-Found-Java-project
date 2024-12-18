@@ -12,7 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,12 +44,18 @@ public class ItemsController {
         return ResponseEntity.ok(itemsList);
     }
 
-
+//
     @PostMapping(path="/items")
-    public ResponseEntity<ItemsDto> addNewItem(@RequestBody ItemsDto itemsDto){
+    public ResponseEntity<ItemsDto> addNewItem(@RequestBody ItemsDto itemsDto) throws IOException {
         ItemsDto createdItem = itemsService.addNewItem(itemsDto);
         return ResponseEntity.ok(createdItem);
     }
+
+//    @PostMapping("/addItems")
+//    public ResponseEntity<ItemsDto> addNewItem(@RequestPart ItemsDto itemsDto, @RequestPart MultipartFile imageFile) throws IOException {
+//        ItemsDto createdItem = itemsService.addNewItem(itemsDto,imageFile);
+//        return ResponseEntity.ok(createdItem);
+//    }
 
 
     @DeleteMapping(path = "/items/{id}")

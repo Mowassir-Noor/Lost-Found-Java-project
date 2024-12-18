@@ -7,8 +7,10 @@ import com.gazi.lostFound.repositories.ItemsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +41,9 @@ public class ItemsService {
         return modelMapper.map(itemsEntity, ItemsDto.class);
     }
 
-    public ItemsDto addNewItem(ItemsDto itemsDto) {
+    public ItemsDto addNewItem(ItemsDto itemsDto) throws IOException {
         ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
-        // saving itemsEntity to the dataBase
+
         return modelMapper.map(itemsRepository.save(itemsEntity), ItemsDto.class);
     }
 
@@ -94,6 +96,49 @@ public class ItemsService {
 
 
     }
+//
+//    public ItemsDto addNewItemWithImage(ItemsDto itemsDto, MultipartFile imageFile) throws IOException {
+//        ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
+//        itemsEntity.setImageName(imageFile.getOriginalFilename());
+//        itemsEntity.setImageType(imageFile.getContentType());
+//        itemsEntity.setImageData(imageFile.getBytes());
+//        itemsRepository.save(itemsEntity);
+//        return itemsDto;
+//
+//    }
+
+
+
+    public ItemsDto addNewItemWithImage(ItemsDto itemsDto, MultipartFile imageFile) throws IOException {
+        // Validate file
+        if (imageFile.isEmpty()) {
+            throw new IllegalArgumentException("Uploaded file is empty");
+        }
+        if (!isValidImageType(imageFile.getContentType())) {
+            throw new IllegalArgumentException("Invalid file type: " + imageFile.getContentType());
+        }
+
+        // Map DTO to Entity
+        ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
+
+        // Add image details to the entity
+        itemsEntity.setImageName(imageFile.getOriginalFilename());
+        itemsEntity.setImageType(imageFile.getContentType());
+        itemsEntity.setImageData(imageFile.getBytes());
+
+        // Save the entity to the database
+        ItemsEntity savedEntity = itemsRepository.save(itemsEntity);
+
+        // Map Entity back to DTO to include updated data like id
+//        return modelMapper.map(savedEntity, ItemsDto.class);
+        return modelMapper.map(itemsRepository.save(savedEntity), ItemsDto.class);
+    }
+
+    // Helper method to validate image types
+    private boolean isValidImageType(String contentType) {
+        return contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"));
+    }
+
 
     //    public boolean deleteAll() {
 //        itemsRepository.deleteAll();

@@ -10,17 +10,25 @@ public class ItemsDto {
     private LocalDate itemDate;
     private boolean found;
 
+//    //image relate information
+    private String imageName;
+    private String imageType;
+    private byte[] imageData;
+
     // Default constructor
     public ItemsDto() {}
 
     // Parameterized constructor
-    public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found) {
+    public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found,String imageName, String imageType, byte[] imageData) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.itemDate = itemDate;
         this.found = found;
+        this.imageName = imageName;
+        this.imageType = imageType;
+        this.imageData = imageData;
     }
 
     // Getters and setters
@@ -41,4 +49,15 @@ public class ItemsDto {
 
     public boolean isFound() { return found; }
     public void setFound(boolean found) { this.found = found; }
+//
+
+
+    public String getImageName() { return imageName; }
+    public void setImageName(String imageName) { this.imageName = imageName; }
+    public String getImageType() { return imageType; }
+    public void setImageType(String imageType) { this.imageType = imageType; }
+
+    public byte[] getImageData() { return imageData; }
+    public void setImageData(byte[] imageData) { this.imageData = imageData; }
 }
+

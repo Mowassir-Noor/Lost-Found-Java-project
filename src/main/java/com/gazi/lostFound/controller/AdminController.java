@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 // get
@@ -81,12 +83,21 @@ public class AdminController {
         return ResponseEntity.ok(itemsList);
     }
 
+    //   it's working, comment for image trial
+//    @PostMapping(path="/items")
+//    public ResponseEntity<ItemsDto> addNewItem(@RequestBody ItemsDto itemsDto) throws IOException {
+//        ItemsDto createdItem = itemsService.addNewItem(itemsDto);
+//        return ResponseEntity.ok(createdItem);
+//    }
 
-    @PostMapping(path="/items")
-    public ResponseEntity<ItemsDto> addNewItem(@RequestBody ItemsDto itemsDto){
-        ItemsDto createdItem = itemsService.addNewItem(itemsDto);
+
+    @PostMapping("/items")
+    public ResponseEntity<ItemsDto> addNewItem(@RequestPart("itemsDto") ItemsDto itemsDto, @RequestPart("file") MultipartFile imageFile) throws IOException {
+        ItemsDto createdItem = itemsService.addNewItemWithImage(itemsDto,imageFile);
         return ResponseEntity.ok(createdItem);
     }
+
+
 
 
     @DeleteMapping(path = "/items/{id}")
