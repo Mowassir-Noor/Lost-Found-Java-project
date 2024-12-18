@@ -1,14 +1,7 @@
 package com.gazi.lostFound.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
-//@Data
-//@AllArgsConstructor     we can use these annotations from lombok so that we dont have to write all the boilerplate setters and getters
-//@NoArgsConstructor
 public class ItemsDto {
     private Long itemId;
     private String itemName;
@@ -17,6 +10,10 @@ public class ItemsDto {
     private LocalDate itemDate;
     private boolean found;
 
+    // Default constructor
+    public ItemsDto() {}
+
+    // Parameterized constructor
     public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -25,54 +22,23 @@ public class ItemsDto {
         this.itemDate = itemDate;
         this.found = found;
     }
-    public ItemsDto() {
-        // Default constructor
-    }
-    public Long getItemId() {
-        return itemId;
-    }
 
-    public String getItemName() {
-        return itemName;
-    }
+    // Getters and setters
+    public Long getItemId() { return itemId; }
+    public void setItemId(Long itemId) { this.itemId = itemId; }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
+    public String getItemName() { return itemName; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
 
-    public String getItemCategory() {
-        return itemCategory;
-    }
+    public String getItemDescription() { return itemDescription; }
+    public void setItemDescription(String itemDescription) { this.itemDescription = itemDescription; }
 
-    public LocalDate getItemDate() {
-        return itemDate;
-    }
+    public String getItemCategory() { return itemCategory; }
+    public void setItemCategory(String itemCategory) { this.itemCategory = itemCategory; }
 
-    public boolean isFound() {
-        return found;
-    }
+    public LocalDate getItemDate() { return itemDate; }
+    public void setItemDate(LocalDate itemDate) { this.itemDate = itemDate; }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
-
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
-    }
-
-    public void setItemDate(LocalDate itemDate) {
-        this.itemDate = itemDate;
-    }
-
-    public void setFound(boolean found) {
-        this.found = found;
-    }
+    public boolean isFound() { return found; }
+    public void setFound(boolean found) { this.found = found; }
 }

@@ -1,4 +1,4 @@
-package com.gazi.lostFound.configurations;
+package com.gazi.lostFound.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -11,4 +11,5 @@ public class AppConfig {
     public ModelMapper getModelMapper(){
         return new ModelMapper();
     }
+
 }

@@ -94,6 +94,7 @@ public class ItemsService {
 
 
     }
+
     //    public boolean deleteAll() {
 //        itemsRepository.deleteAll();
 //        return true;
