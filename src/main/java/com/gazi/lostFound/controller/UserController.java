@@ -19,19 +19,20 @@ public class UserController {
     final private ItemsService itemsService;
     final private ItemsRepository itemsRepository;
 
-    // creating a constructor and passing the data form Items service
+    // creating a constructor and passing the data from Items service
     public UserController(ItemsService itemsService, ItemsRepository itemsRepository) {
         this.itemsService = itemsService;
         this.itemsRepository = itemsRepository;
     }
 
-
+ //endpoint to get the item detail by passing item id
     @GetMapping(path = "/items/{id}")
     public ResponseEntity<ItemsDto> getItemsById(@PathVariable("id") Long itemsId){
         ItemsDto itemsDto = itemsService.getItemsById(itemsId);
         return ResponseEntity.ok(itemsDto);
     }
 
+//end point to get the list of all the items
     @GetMapping("/items")
     public ResponseEntity<List<ItemsDto>> getAllItems(){
         List<ItemsDto> itemsList = itemsService.getAllItems();

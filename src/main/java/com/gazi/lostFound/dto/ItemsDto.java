@@ -3,6 +3,8 @@ package com.gazi.lostFound.dto;
 import java.time.LocalDate;
 
 public class ItemsDto {
+
+//    encapsulated data for ItemsDto
     private Long itemId;
     private String itemName;
     private String itemDescription;
@@ -10,15 +12,15 @@ public class ItemsDto {
     private LocalDate itemDate;
     private boolean found;
 
-//    //image relate information
+   //image relate information
     private String imageName;
     private String imageType;
     private byte[] imageData;
 
-    // Default constructor
+    // default constructor
     public ItemsDto() {}
 
-    // Parameterized constructor
+    // parameterized constructor
     public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found,String imageName, String imageType, byte[] imageData) {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -49,7 +51,7 @@ public class ItemsDto {
 
     public boolean isFound() { return found; }
     public void setFound(boolean found) { this.found = found; }
-//
+
 
 
     public String getImageName() { return imageName; }

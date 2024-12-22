@@ -44,7 +44,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //disabling csrf
         http.csrf(csrf -> csrf.disable())
+
+//                checking authorizaion header for role based authorization
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login","/").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
@@ -53,6 +56,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
 
+//                session creation policy is stateless base 64 basic auth header is enough
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .logout(logout -> logout

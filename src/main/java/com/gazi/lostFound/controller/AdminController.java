@@ -33,14 +33,14 @@ public class AdminController {
 
     private final AuthService authService;
     private final ItemsService itemsService;
-    private final UserRepository userRepository;
-    private final ItemsRepository itemsRepository;
+//    private final UserRepository userRepository;
+//    private final ItemsRepository itemsRepository;
 
     public AdminController(AuthService authService, ItemsService itemsService, UserRepository userRepository, ItemsRepository itemsRepository) {
         this.authService = authService;
         this.itemsService = itemsService;
-        this.userRepository = userRepository;
-        this.itemsRepository = itemsRepository;
+//        this.userRepository = userRepository;
+//        this.itemsRepository = itemsRepository;
     }
 
 
@@ -92,6 +92,8 @@ public class AdminController {
 //    }
 
 
+
+    //post for adding new item  with image
     @PostMapping("/items")
     public ResponseEntity<ItemsDto> addNewItem(@RequestPart("itemsDto") ItemsDto itemsDto, @RequestPart("file") MultipartFile imageFile) throws IOException {
         ItemsDto createdItem = itemsService.addNewItemWithImage(itemsDto,imageFile);

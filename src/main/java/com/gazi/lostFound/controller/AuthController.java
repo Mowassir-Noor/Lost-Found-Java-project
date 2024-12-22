@@ -20,6 +20,9 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+
+
+// endpoint to register new user
     @PostMapping("/register")
     public ResponseEntity<UserResponseDto> register(@Valid @RequestBody RegisterUserDto dto){
         try {
@@ -33,6 +36,8 @@ public class AuthController {
         }
 
     }
+
+    //endpoint to login new user
 
     @PostMapping("/login")
     public ResponseEntity<UserResponseDto> login(@Valid @RequestBody LoginUserDto loginUserDto){

@@ -4,8 +4,12 @@ import com.gazi.lostFound.User.UserRole;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+
+
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "User_type", discriminatorType = DiscriminatorType.STRING)
+
+//abstract userEntity for security and connection wiht database
 @Entity
 @Table(name = "Users")
 public abstract class UserEntity {
