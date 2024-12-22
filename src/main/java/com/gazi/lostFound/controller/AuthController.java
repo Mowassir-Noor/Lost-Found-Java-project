@@ -24,9 +24,11 @@ public class AuthController {
     public ResponseEntity<UserResponseDto> register(@Valid @RequestBody RegisterUserDto dto){
         try {
             UserResponseDto response = authService.register(dto);
+
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
            return ResponseEntity.badRequest().build();
         }
 

@@ -131,7 +131,10 @@ public class ItemsService {
 
         // Map Entity back to DTO to include updated data like id
 //        return modelMapper.map(savedEntity, ItemsDto.class);
-        return modelMapper.map(itemsRepository.save(savedEntity), ItemsDto.class);
+
+//        returning itemsEntity because saved entity has image and sending an image will cost performance
+//        return modelMapper.map(itemsRepository.save(savedEntity), ItemsDto.class);
+        return modelMapper.map(itemsEntity, ItemsDto.class);
     }
 
     // Helper method to validate image types

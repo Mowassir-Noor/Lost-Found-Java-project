@@ -32,6 +32,7 @@ public class AuthService implements AuthServieInterface {
     public UserResponseDto register(RegisterUserDto dto) {
         Optional<UserEntity> existingUser = userRepository.findByEmail(dto.getEmail());
         if (existingUser.isPresent()) {
+
             throw new UserAlreadyExistsException("User with this email already exists.");
         }
 

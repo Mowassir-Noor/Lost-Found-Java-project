@@ -25,6 +25,7 @@ import java.util.List;
 //update
 //delete
 
+//api to add admin
 
 @RestController
 @RequestMapping("/admin")
