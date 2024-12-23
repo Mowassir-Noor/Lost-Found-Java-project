@@ -1,15 +1,10 @@
 package com.gazi.lostFound.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
-//@Data
-//@AllArgsConstructor     we can use these annotations from lombok so that we dont have to write all the boilerplate setters and getters
-//@NoArgsConstructor
 public class ItemsDto {
+
+//    encapsulated data for ItemsDto
     private Long itemId;
     private String itemName;
     private String itemDescription;
@@ -17,62 +12,54 @@ public class ItemsDto {
     private LocalDate itemDate;
     private boolean found;
 
-    public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found) {
+   //image relate information
+    private String imageName;
+    private String imageType;
+    private byte[] imageData;
+
+    // default constructor
+    public ItemsDto() {}
+
+    // parameterized constructor
+    public ItemsDto(Long itemId, String itemName, String itemDescription, String itemCategory, LocalDate itemDate, boolean found,String imageName, String imageType, byte[] imageData) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.itemDate = itemDate;
         this.found = found;
-    }
-    public ItemsDto() {
-        // Default constructor
-    }
-    public Long getItemId() {
-        return itemId;
+        this.imageName = imageName;
+        this.imageType = imageType;
+        this.imageData = imageData;
     }
 
-    public String getItemName() {
-        return itemName;
-    }
+    // Getters and setters
+    public Long getItemId() { return itemId; }
+    public void setItemId(Long itemId) { this.itemId = itemId; }
 
-    public String getItemDescription() {
-        return itemDescription;
-    }
+    public String getItemName() { return itemName; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
 
-    public String getItemCategory() {
-        return itemCategory;
-    }
+    public String getItemDescription() { return itemDescription; }
+    public void setItemDescription(String itemDescription) { this.itemDescription = itemDescription; }
 
-    public LocalDate getItemDate() {
-        return itemDate;
-    }
+    public String getItemCategory() { return itemCategory; }
+    public void setItemCategory(String itemCategory) { this.itemCategory = itemCategory; }
 
-    public boolean isFound() {
-        return found;
-    }
+    public LocalDate getItemDate() { return itemDate; }
+    public void setItemDate(LocalDate itemDate) { this.itemDate = itemDate; }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
-    }
+    public boolean isFound() { return found; }
+    public void setFound(boolean found) { this.found = found; }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
-    }
 
-    public void setItemCategory(String itemCategory) {
-        this.itemCategory = itemCategory;
-    }
+    public String getImageName() { return imageName; }
+    public void setImageName(String imageName) { this.imageName = imageName; }
+    public String getImageType() { return imageType; }
+    public void setImageType(String imageType) { this.imageType = imageType; }
 
-    public void setItemDate(LocalDate itemDate) {
-        this.itemDate = itemDate;
-    }
-
-    public void setFound(boolean found) {
-        this.found = found;
-    }
+    public byte[] getImageData() { return imageData; }
+    public void setImageData(byte[] imageData) { this.imageData = imageData; }
 }
+

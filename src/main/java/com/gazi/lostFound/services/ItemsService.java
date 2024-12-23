@@ -7,8 +7,10 @@ import com.gazi.lostFound.repositories.ItemsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,17 +41,19 @@ public class ItemsService {
         return modelMapper.map(itemsEntity, ItemsDto.class);
     }
 
-    public ItemsDto addNewItem(ItemsDto itemsDto) {
+    public ItemsDto addNewItem(ItemsDto itemsDto) throws IOException {
         ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
-        // saving itemsEntity to the dataBase
+
         return modelMapper.map(itemsRepository.save(itemsEntity), ItemsDto.class);
     }
 
 
     public List<ItemsDto> getAllItems() {
+//        instead of stream we can use for loop too
         return itemsRepository.findAll().stream().map(itemsEntity -> modelMapper.map(itemsEntity, ItemsDto.class)).collect(Collectors.toList());
     }
 
+//    takes itemId and delete the item wiht the given itemid
     public boolean deleteItem(Long itemsId) {
 
         if (itemsRepository.existsById(itemsId)) {
@@ -62,6 +66,7 @@ public class ItemsService {
     }
 
     public boolean updateItem(Long itemId, ItemsDto itemsDto) {
+//        update the database with all the given data
        if (itemsRepository.existsById(itemId)) {
             ItemsEntity existingData = itemsRepository.findById(itemId).get();
            if (itemsDto.getItemName() != null) {
@@ -75,14 +80,10 @@ public class ItemsService {
            }
            if (itemsDto.getItemDate()!=null){
                existingData.setItemDate(itemsDto.getItemDate());
-
            }
 
-
-
-                existingData.setFound(itemsDto.isFound());
-
-
+           existingData.setFound(itemsDto.isFound());
+//           save the new data
             itemsRepository.save(existingData);
             return true;
 
@@ -94,6 +95,50 @@ public class ItemsService {
 
 
     }
+//
+//    public ItemsDto addNewItemWithImage(ItemsDto itemsDto, MultipartFile imageFile) throws IOException {
+//        ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
+//        itemsEntity.setImageName(imageFile.getOriginalFilename());
+//        itemsEntity.setImageType(imageFile.getContentType());
+//        itemsEntity.setImageData(imageFile.getBytes());
+//        itemsRepository.save(itemsEntity);
+//        return itemsDto;
+//
+//    }
+
+
+
+    public ItemsDto addNewItemWithImage(ItemsDto itemsDto, MultipartFile imageFile) throws IOException {
+        // Validate file
+        if (imageFile.isEmpty()) {
+            throw new IllegalArgumentException("Uploaded file is empty");
+        }
+        if (!isValidImageType(imageFile.getContentType())) {
+            throw new IllegalArgumentException("Invalid file type: " + imageFile.getContentType());
+        }
+
+        // Map DTO to Entity
+        ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
+
+        // Add image details to the entity
+        itemsEntity.setImageName(imageFile.getOriginalFilename());
+        itemsEntity.setImageType(imageFile.getContentType());
+        itemsEntity.setImageData(imageFile.getBytes());
+
+        // Save the entity to the database
+        ItemsEntity savedEntity = itemsRepository.save(itemsEntity);
+
+
+
+        return modelMapper.map(itemsEntity, ItemsDto.class);
+    }
+
+    // Helper method to validate image types
+    private boolean isValidImageType(String contentType) {
+        return contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"));
+    }
+
+//this funcition will delete all the items in database
     //    public boolean deleteAll() {
 //        itemsRepository.deleteAll();
 //        return true;
