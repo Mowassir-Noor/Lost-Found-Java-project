@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController implements ControllerInterface {
 
     final private ItemsService itemsService;
     final private ItemsRepository itemsRepository;

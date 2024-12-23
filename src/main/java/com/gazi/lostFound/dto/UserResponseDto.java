@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 public class UserResponseDto {
 
     private String username;
+
+
+
     private String email;
     private UserRole role;
     private LocalDateTime registrationDate;

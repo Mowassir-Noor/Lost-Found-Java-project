@@ -53,17 +53,6 @@ public class ItemsService {
         return itemsRepository.findAll().stream().map(itemsEntity -> modelMapper.map(itemsEntity, ItemsDto.class)).collect(Collectors.toList());
     }
 
-//    takes itemId and delete the item wiht the given itemid
-    public boolean deleteItem(Long itemsId) {
-
-        if (itemsRepository.existsById(itemsId)) {
-            itemsRepository.deleteById(itemsId);
-            return true;
-
-        } else return false;
-
-
-    }
 
     public boolean updateItem(Long itemId, ItemsDto itemsDto) {
 //        update the database with all the given data
@@ -116,27 +105,37 @@ public class ItemsService {
         if (!isValidImageType(imageFile.getContentType())) {
             throw new IllegalArgumentException("Invalid file type: " + imageFile.getContentType());
         }
-
         // Map DTO to Entity
         ItemsEntity itemsEntity = modelMapper.map(itemsDto, ItemsEntity.class);
 
-        // Add image details to the entity
+        // add image details to the entity
         itemsEntity.setImageName(imageFile.getOriginalFilename());
         itemsEntity.setImageType(imageFile.getContentType());
         itemsEntity.setImageData(imageFile.getBytes());
 
-        // Save the entity to the database
+        // save the entity to the database
         ItemsEntity savedEntity = itemsRepository.save(itemsEntity);
-
-
-
         return modelMapper.map(itemsEntity, ItemsDto.class);
     }
+
+    //    takes itemId and delete the item wiht the given itemid
+    public boolean deleteItem(Long itemsId) {
+        if (itemsRepository.existsById(itemsId)) {
+            try {
+                itemsRepository.deleteById(itemsId);
+                return true;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else return false;
+    }
+
 
     // Helper method to validate image types
     private boolean isValidImageType(String contentType) {
         return contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"));
     }
+
 
 //this funcition will delete all the items in database
     //    public boolean deleteAll() {

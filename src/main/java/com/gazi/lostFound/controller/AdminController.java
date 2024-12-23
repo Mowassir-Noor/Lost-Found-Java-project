@@ -29,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController implements ControllerInterface {
 
     private final AuthService authService;
     private final ItemsService itemsService;
@@ -68,21 +68,40 @@ public class AdminController {
     }
 
 
-
+//    endpoint to get item's detail by itemId
     @GetMapping(path = "/items/{id}")
     public ResponseEntity<ItemsDto> getItemsById(@PathVariable("id") Long itemsId){
         ItemsDto itemsDto = itemsService.getItemsById(itemsId);
         return ResponseEntity.ok(itemsDto);
     }
 
-
-
-
+//endpoint to get the itemlist
     @GetMapping("/items")
     public ResponseEntity<List<ItemsDto>> getAllItems(){
         List<ItemsDto> itemsList = itemsService.getAllItems();
         return ResponseEntity.ok(itemsList);
     }
+
+    //post for adding new item  with image
+    @PostMapping("/items")
+    public ResponseEntity<ItemsDto> addNewItem(@RequestPart("itemsDto") ItemsDto itemsDto,
+                                               @RequestPart("file") MultipartFile imageFile){
+        try {
+            ItemsDto createdItem = itemsService.addNewItemWithImage(itemsDto,imageFile);
+            return ResponseEntity.ok(createdItem);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+//    Endpoint for deleting the item
+    @DeleteMapping(path = "/items/{id}")
+    public ResponseEntity<Boolean> deleteItem(@PathVariable("id") Long itemsId){
+        boolean result = itemsService.deleteItem(itemsId);
+        return ResponseEntity.ok(result);
+    }
+
+
 
     //   it's working, comment for image trial
 //    @PostMapping(path="/items")
@@ -93,21 +112,9 @@ public class AdminController {
 
 
 
-    //post for adding new item  with image
-    @PostMapping("/items")
-    public ResponseEntity<ItemsDto> addNewItem(@RequestPart("itemsDto") ItemsDto itemsDto, @RequestPart("file") MultipartFile imageFile) throws IOException {
-        ItemsDto createdItem = itemsService.addNewItemWithImage(itemsDto,imageFile);
-        return ResponseEntity.ok(createdItem);
-    }
 
 
 
-
-    @DeleteMapping(path = "/items/{id}")
-    public ResponseEntity<Boolean> deleteItem(@PathVariable("id") Long itemsId){
-        boolean result = itemsService.deleteItem(itemsId);
-        return ResponseEntity.ok(result);
-    }
 
 
     @PatchMapping(path="/items/{id}")

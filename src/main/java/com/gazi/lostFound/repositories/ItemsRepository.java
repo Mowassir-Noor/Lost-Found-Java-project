@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemsRepository extends JpaRepository<ItemsEntity,Long> {
-    //JpaRepository has created methods in the interface and implementd the methods in JpaRepository with all
-    //the sql code
+   //Deals with all the sql code
+    //I can add custom Sql Queries too
+
 }

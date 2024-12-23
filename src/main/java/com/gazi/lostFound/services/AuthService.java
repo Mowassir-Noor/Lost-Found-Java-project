@@ -2,8 +2,6 @@ package com.gazi.lostFound.services;
 
 import java.util.List;
 import java.util.Optional;
-
-import com.gazi.lostFound.User.UserRole;
 import com.gazi.lostFound.dto.LoginUserDto;
 import com.gazi.lostFound.dto.UserResponseDto;
 import com.gazi.lostFound.dto.RegisterUserDto;
@@ -36,13 +34,11 @@ public class AuthService implements AuthServieInterface {
 
             throw new UserAlreadyExistsException("User with this email already exists.");
         }
-
         // Hash the password before saving it
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         //type casting regularUser to UserEntity(upcasting)
         UserEntity user = new RegularUser(dto.getUsername(), dto.getEmail(), encodedPassword);
-
-//        saving the data to the database
+        //saving the data to the database
         userRepository.save(user);
 
         return new UserResponseDto(user.getUsername(), user.getEmail(), user.getRole(), user.getRegistrationDate());
@@ -50,7 +46,6 @@ public class AuthService implements AuthServieInterface {
 
     @Override
     public UserResponseDto login(LoginUserDto loginUserDto) {
-//
         Optional<UserEntity> existingUser = userRepository.findByEmail(loginUserDto.getEmail());
         if (existingUser.isEmpty() ||
                 !passwordEncoder.matches(loginUserDto.getPassword(), existingUser.get().getPassword())) {
@@ -71,11 +66,10 @@ public class AuthService implements AuthServieInterface {
 
     //register for admin
     public UserResponseDto adminRegister(RegisterUserDto dto) {
-//        check if the email already exists
+        // check if the email already exists
         Optional<UserEntity> existingUser = userRepository.findByEmail(dto.getEmail());
-
         if (existingUser.isPresent()) {
-//            if email already exists throw custom exception
+            //if email already exists throw custom exception
             throw new UserAlreadyExistsException("User with this email already exists.");
         }
 
@@ -83,7 +77,7 @@ public class AuthService implements AuthServieInterface {
 
         // Hash the password before saving it
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
-//        type casting adminEntity to userEntity (upcasting)
+        //type casting adminEntity to userEntity (upcasting)
         UserEntity user = new AdminEntity(dto.getUsername(), dto.getEmail(), encodedPassword);
         userRepository.save(user);
 

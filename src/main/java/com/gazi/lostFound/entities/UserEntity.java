@@ -1,15 +1,10 @@
 package com.gazi.lostFound.entities;
-
 import com.gazi.lostFound.User.UserRole;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
-
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "User_type", discriminatorType = DiscriminatorType.STRING)
-
-//abstract userEntity for security and connection wiht database
+//abstract userEntity for security and connection with database and
+// this class has been inherited by AdminEntity and RegularUser
 @Entity
 @Table(name = "Users")
 public abstract class UserEntity {
@@ -41,7 +36,6 @@ public abstract class UserEntity {
         this.role = role;
         this.registrationDate = LocalDateTime.now();
     }
-
     // Default constructor for JPA
     public UserEntity() {}
 
